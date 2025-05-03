@@ -20,14 +20,15 @@ class LoginController
 
                 // Instantiation de l'objet Login
                 $userObjet = new Login();
-                // Vérifier si l'utilisateur existe déjà
                 $user = $userObjet->FindByEmail($account['email']);
 
                 // Vérification de l'existence de l'utilisateur et du mot de passe
                 if ($user && password_verify($account['password'], $user['password'])) {
+
+                    //$_SESSION['user_id'] = $userId;
                     // Connexion réussie
                     $_SESSION['success'] = "Vous êtes connecté avec succès.";
-                    header("Location: ./Views/Dashboard.php");  // Redirection vers la page d'accueil ou dashboard
+                    // header("Location: ./Views/Dashboard.php");  // Redirection vers la page d'accueil ou dashboard
                     exit();
                 } else {
                     // Erreur de connexion

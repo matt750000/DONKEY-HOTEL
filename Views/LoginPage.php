@@ -1,47 +1,31 @@
 <?php include('head.php'); ?>
 
 <body>
-    <?php include('nav.php'); ?>
-
-    <div class="message-de-errour">
-        <?php if (!empty($_SESSION['erreur'])): ?>
-            <div class="alert alert-danger"><?php echo $_SESSION['erreur'];
-                                            unset($_SESSION['erreur']); ?></div>
-        <?php endif; ?>
-        <?php if (!empty($_SESSION['success'])): ?>
-            <div class="alert alert-success"><?php echo $_SESSION['success'];
-                                                unset($_SESSION['success']); ?></div>
-        <?php endif; ?>
-    </div>
-    <h1>Donkey Hôtel</h1>
-    <form method="POST">
-        <div class="mb-4">
-            <main class="container">
-                <div class="row">
-                    <section class="col-12">
-                        <h1>Connexion à l'espace particulier</h1>
-
-                        <form method="post" action="">
+    <h1 class="text-success text-center">
+        Donkey Hôtel
+    </h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="registrationForm" action="">
                             <div class="form-group">
-                                <label for="email">Adresse Mail</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
+                                <label for="mail"></label>
+                                <input type="email" class="form-control" id="mail" placeholder="Entre votre e-mail" name="mail" required />
                             </div>
                             <div class="form-group">
-                                <label for="password">Mots de passe</label>
-                                <input type="password" id="password" name="password" minlength="8" class="form-control" required>
+                                <label for="pass"></label>
+                                <input type="password" class="form-control" id="pass" placeholder="Votre mot de passe" name="pass" required>
                             </div>
-                            <div class="mt-3">
-                                <input type="submit" class="btn btn-primary" value="Connexion">
-                                <a href="index.php" class="btn btn-secondary">Retour</a>
-                            </div>
+                            <button class="btn btn-warning"> Connexsion </button>
                         </form>
-                    </section>
+                        <p class="mt-3">vous n'avez pas de compte ? <a href="#">Inscruvez-vous !</a></p>
+                    </div>
                 </div>
-            </main>
-
-            <footer>
-                <?php
-                include('footer.php'); ?>
+            </div>
+        </div>
+    </div>
 
 </body>
 

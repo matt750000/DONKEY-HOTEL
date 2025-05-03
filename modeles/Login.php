@@ -17,5 +17,6 @@ class Login extends Base
         $check->execute([':mail' => $account['mail']]);
         $usermail = $check->fetch(PDO::FETCH_ASSOC);
         return $usermail;
+        //return $this->pdo->lastInsertId();
     }
 }

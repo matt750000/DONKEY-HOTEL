@@ -5,7 +5,7 @@ include('head.php'); ?>
 <body>
     <?php include('nav.php'); ?>
     <h1>Donkey Hôtel</h1>
-    <form method="POST" action="../controlleurs/HotelController.php">
+    <form method="POST">
         <div class="mb-4">
             <LEgend>Trouvez votre hôtel</LEgend>
             <label for="ville" class="form-label">

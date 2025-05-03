@@ -9,10 +9,12 @@
   border: 0;
   outline: 0;
 }
+/*
 html,
 body {
   height: 100%;
-}
+} 
+*/
 body {
   background-color: #ffc000;
   display: flex;
@@ -32,14 +34,6 @@ hh.container-fluid {
 h1 {
   margin: auto;
   padding: auto;
-}
-
-form {
-  display: flex;
-  background-color: #e7e6e6;
-  justify-content: space-around;
-  align-items: center;
-  flex-grow: 1;
 }
 
 img {
