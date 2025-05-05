@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+* {
+  border: 0;
+  outline: 0;
+}
+/*
+html,
+body {
+  height: 100%;
+} 
+*/
+body {
+  background-color: #ffc000;
+}
+.navbar {
+  background-color: #ec7f34 !important;
+}
+
+/*
+hh.container-fluid {
+  display: flex;
+  background-color: #ec7f34;
+  justify-content: space-between;
+}
+*/
+h1 {
+  padding-top: 30px;
+  height: 100px;
+}
+
+img {
+  width: 40%;
+  height: 40%;
+}
