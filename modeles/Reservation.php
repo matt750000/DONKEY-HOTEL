@@ -1,138 +1,47 @@
 <?php
+require_once('Base.php');
 
-
-class Model extends Base
+class Reservation extends Base
 {
 
-
-    // Table de la base de données
-    protected $table;
-    // Instance de Db
-    protected $id;
-
-
-
-    public function findAll()
+    public function createReservation($userId, $hotelId, $startDate, $endDate, $total)
     {
-        $query = $this->requete('SELECT * FROM ' . $this->table);
-        return $query->fetchAll();
+        $sql = "INSERT INTO reservation (startdate, enddate, total, client_id, hotel_id)
+                VALUES (:startdate, :enddate, :total, :client_id, :hotel_id)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            'startdate' => $startDate,
+            'enddate' => $endDate,
+            'total' => $total,
+            'client_id' => $userId,
+            'hotel_id' => $hotelId
+        ]);
     }
 
-
-
-    public function findBy(array $criteres)
+    public function getHotelIdByName($hotelName)
     {
-        $champs = [];
-        $valeurs = [];
-
-        // On boucle pour éclater le tableau
-        foreach ($criteres as $champ => $valeur) {
-            // SELECT * FROM annonces WHERE actif = ? AND signale = 0
-            // bindValue(1, valeur)
-            $champs[] = "$champ = ?";
-            $valeurs[] = $valeur;
-        }
-
-        // On transforme le tableau "champs" en une chaine de caractères
-        $liste_champs = implode(' AND ', $champs);
-
-        // On exécute la requête
-        return $this->requete('SELECT * FROM ' . $this->table . ' WHERE ' . $liste_champs, $valeurs)->fetchAll();
+        $hotelName = trim(strtolower($hotelName));
+        $sql = "SELECT id FROM hotel WHERE name = :name";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['name' => $hotelName]);
+        return $stmt->fetchColumn(); // retourne l'id de l'hôtel
     }
 
-
-
-    public function find(int $id)
+    public function option()
     {
-        return $this->requete("SELECT * FROM {$this->table} WHERE id = $id")->fetch();
+        $sql = "SELECT * FROM option_hotel";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
-
-    public function create()
+    public function getPrixParNuit($hotelId)
     {
-        $champs = [];
-        $inter = [];
-        $valeurs = [];
+        $sql = "SELECT pricenight FROM hotel WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $hotelId]);
 
-        // On boucle pour éclater le tableau
-        foreach ($this as $champ => $valeur) {
-            // INSERT INTO annonces (titre, description, actif) VALUES (?, ?, ?)
-            if ($valeur !== null && $champ != 'db' && $champ != 'table') {
-                $champs[] = $champ;
-                $inter[] = "?";
-                $valeurs[] = $valeur;
-            }
-        }
-
-        // On transforme le tableau "champs" en une chaine de caractères
-        $liste_champs = implode(', ', $champs);
-        $liste_inter = implode(', ', $inter);
-
-        // On exécute la requête
-        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ')VALUES(' . $liste_inter . ')', $valeurs);
-    }
-
-
-
-    public function update()
-    {
-        $champs = [];
-        $valeurs = [];
-
-        // On boucle pour éclater le tableau
-        foreach ($this as $champ => $valeur) {
-            // UPDATE annonces SET titre = ?, description = ?, actif = ? WHERE id= ?
-            if ($valeur !== null && $champ != 'db' && $champ != 'table') {
-                $champs[] = "$champ = ?";
-                $valeurs[] = $valeur;
-            }
-        }
-        $valeurs[] = $this->id;
-
-        // On transforme le tableau "champs" en une chaine de caractères
-        $liste_champs = implode(', ', $champs);
-
-        // On exécute la requête
-        return $this->requete('UPDATE ' . $this->table . ' SET ' . $liste_champs . ' WHERE id = ?', $valeurs);
-    }
-
-    public function delete(int $id)
-    {
-        return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id]);
-    }
-
-
-    public function requete(string $sql, ?array $attributs = null)
-    {
-
-
-        // On vérifie si on a des attributs
-        if ($attributs !== null) {
-            // Requête préparée
-            $query = $this->pdo->prepare($sql);
-            $query->execute($attributs);
-            return $query;
-        } else {
-            // Requête simple
-            return $this->pdo->query($sql);
-        }
-    }
-
-
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $key => $value) {
-            // On récupère le nom du setter correspondant à la clé (key)
-            // titre -> setTitre
-            $setter = 'set' . ucfirst($key);
-
-            // On vérifie si le setter existe
-            if (method_exists($this, $setter)) {
-                // On appelle le setter
-                $this->$setter($value);
-            }
-        }
-        return $this;
+        return $stmt->fetchColumn();
     }
 }

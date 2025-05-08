@@ -1,48 +1,61 @@
 <?php
+include('head.php');
+include('nav.php');
+?>
 
-include('head.php'); ?>
+<h1 class="text-center text-white">
+    Donkey Hôtel
+</h1>
+<?php if (!empty($_SESSION['erreur'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['erreur']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['erreur']); ?>
+<?php endif; ?>
 
-<body>
-    <?php include('nav.php'); ?>
-    <h1>Donkey Hôtel</h1>
-    <form method="POST">
-        <div class="mb-4">
-            <LEgend>Trouvez votre hôtel</LEgend>
-            <label for="ville" class="form-label">
-                <select class="form-select" id="ville" name="ville" required>
-                    <option value="" disabled selected>Choisissez une ville</option>
-                    <?php foreach ($hotel as $item) : ?>
-                        <option value="<?= htmlspecialchars($item['name']) ?>">
-                            <?= htmlspecialchars($item['name']) ?>
-                        </option> <?php endforeach; ?>
-                </select>
-                <label for="arrivalDate" class="form-label">
-                    <select class="form-select" id="arrivalDate" name="arrivalDate" required>
-                        <option value="" disabled selected>Date d'arrivée</option>
-                        <?php foreach ($hotel as $item) : ?>
-                            <option value="<?= htmlspecialchars($item['startdate']) ?>">
-                                <?= htmlspecialchars($item['startdate']) ?>
-                            </option> <?php endforeach; ?>
-                    </select>
-
-                    <label for="departDate" class="form-label">
-                        <select class="form-select" id="departDate" name="departDate" required>
-                            <option value="" disabled selected>Date de retour</option>
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h4 class="mb-4">Trouvez votre hôtel</h4>
+                <form method="post" action="">
+                    <div class="mb-3">
+                        <select class="form-select" id="city" name="city" required>
+                            <option value="" disabled selected>Choisissez une ville</option>
                             <?php foreach ($hotel as $item) : ?>
-                                <option value="<?= htmlspecialchars($item['enddate']) ?>">
-                                    <?= htmlspecialchars($item['enddate']) ?>
+                                <option value="<?= htmlspecialchars($item['id']) ?>">
+                                    <?= htmlspecialchars($item['name']) ?>
                                 </option> <?php endforeach; ?>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="startdate">Date d'arrivée</label>
+                        <input type="date" id="startdate" name="startdate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="enddate">Date de retour</label>
+                        <input type="date" id="enddate" name="enddate">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-warning btn-lg"> Envoyer </button>
+                    </div>
+                </form>
+            </div>
 
-                        <a href="../controlleurs/HotelController.php" class="btn btn-primary">Voir</a>
+            <div class="col-md-6 text-center">
+                <img src="../img/photo-hotel-paris.jpg" alt="hotel" class="img-fluid">
+            </div>
         </div>
-        <div class="img1">
-            <img src="../img/photo-hotel-paris.jpg" alt="hotel">
-        </div>
-    </form>
-    <?php
-    include('footer.php'); ?>
+    </div>
+</div>
 
-</body>
-
-</html>
+<?php
+include('footer.php'); ?>

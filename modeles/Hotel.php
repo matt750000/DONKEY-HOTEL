@@ -9,33 +9,35 @@ class Hotel extends Base
 
     public function read()
     {
-        $sql = 'select city.name, reservation.startdate, reservation.enddate
-         from city
-         inner join hotel 
-         on city.id = hotel.city_id
-         inner join reservation
-         on reservation.hotel_id = hotel.id '; //. $this->table;
+        $sql = 'select * from city '; //. $this->table;
         $query = $this->pdo->query($sql);
         //$query = $this->pdo->query($sql);
-        $query->execute();
+        //$query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
 
         //return $query;
     }
 
-    public function showDetail()
+    public function showDetail($cityId)
     {
-        $sql = 'select city.name, hotel.name,hotel.pricenight, reservation.startdate, reservation.enddate
-        from city
-        inner join hotel 
-        on city.id = hotel.city_id
-        inner join reservation
-        on reservation.hotel_id = hotel.id'; //. $this->table;
-        $query = $this->pdo->query($sql);
-        //$query = $this->pdo->query($sql);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        $sql = 'SELECT hotel.name AS hotel_name, hotel.pricenight, city.name AS city_name
+                FROM hotel
+                LEFT JOIN city ON hotel.city_id = city.id
+                WHERE city.id = :cityId'; //. $this->table;
+        $query = $this->pdo->prepare($sql);
+        $query->execute([':cityId' => $cityId]);
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCityNameById($cityId)
+    {
+        $sql = "SELECT name FROM city WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $cityId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['name'] : null;
     }
 }

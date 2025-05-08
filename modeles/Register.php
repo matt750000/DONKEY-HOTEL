@@ -27,4 +27,18 @@ class Register extends Base
         ]);
         return $this->pdo->lastInsertId();
     }
+    public function emailExists($email)
+    {
+        $sql = "SELECT COUNT(*) FROM user WHERE mail = :mail";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':mail' => $email]);
+        return $stmt->fetchColumn() > 0;
+    }
+    public function getUserById($id)
+    {
+        $sql = "SELECT firstname, lastname FROM users WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

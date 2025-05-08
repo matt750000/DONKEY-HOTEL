@@ -15,33 +15,28 @@ body {
   height: 100%;
 } 
 */
+
 body {
   background-color: #ffc000;
-  display: flex;
-  flex-direction: column;
 }
-.navbar-expand-lg bg-body-tertiary {
-  display: flex;
-  background-color: #ec7f34;
-  justify-content: space-between;
+.navbar {
+  background-color: #ec7f34 !important;
 }
+
+/*
 hh.container-fluid {
   display: flex;
   background-color: #ec7f34;
   justify-content: space-between;
 }
+*/
 
 h1 {
-  margin: auto;
-  padding: auto;
+  padding-top: 30px;
+  height: 100px;
 }
 
 img {
-  width: 40%;
-  height: 40%;
-}
-.container {
-  width: 100%;
-  text-align: center;
-  color: white;
+  width: 80%;
+  height: 80%;
 }
