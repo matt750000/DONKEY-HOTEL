@@ -7,7 +7,11 @@ class SelectController
     public function search()
     {
 
-
+        if (empty($_SESSION['user'])) {
+            $_SESSION['erreur'] = "Vous devez être connecté pour réserver.";
+            header('Location: index.php?page=login');
+            exit;
+        }
 
         if (!empty($_SESSION['search_data'])) {
             require_once(__DIR__ . "/../Views/SelectPage.php");

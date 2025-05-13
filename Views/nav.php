@@ -30,10 +30,10 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="d-flex justify-content-center flex-grow-1">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="#">Mon compte</a>
+                        <a class="nav-link text-white fw-bold" href="http://localhost:8000/index.php?page=account">Mon compte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fw-bold" href="#">Mes réservations</a>
+                        <a class="nav-link text-white fw-bold" href="http://localhost:8000/index.php?page=myReservation">Mes réservations</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-bold" href="http://localhost:8000/index.php?page=hotel">Trouver un hôtel</a>

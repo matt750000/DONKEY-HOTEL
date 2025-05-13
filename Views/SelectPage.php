@@ -1,6 +1,5 @@
 <?php include('head.php');
 include('nav.php');
-
 ?>
 <?php
 $search = $_SESSION['search'] ?? [];

@@ -7,7 +7,11 @@ class HotelController
 {
     public function home()
     {
-
+        if (empty($_SESSION['user'])) {
+            $_SESSION['erreur'] = "Vous devez être connecté pour réserver.";
+            header('Location: index.php?page=login');
+            exit;
+        }
         $hotelPage = new Hotel;
         $hotel = $hotelPage->read();
         $_SESSION['ville_list'] = $hotel;

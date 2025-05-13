@@ -21,10 +21,19 @@ switch ($page) {
     case 'result':
         require_once("./controlleurs/ResultController.php");
         break;
+    case 'myReservation':
+        require_once("./controlleurs/MyreservationController.php");
+        break;
+    case 'account':
+        require_once("./controlleurs/AccountController.php");
+        break;
+    case 'edit?':
+        require_once("./controlleurs/EditController.php");
+        break;
     case 'logout':
         require_once("./controlleurs/UserController.php");
-        $controller = new UserController();
-        $controller->logout();
+        $logeOut = new UserController();
+        $logeOut->logout();
         break;
     case 'accueil':
         require_once("./controlleurs/UserController.php");

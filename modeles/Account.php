@@ -1,35 +1,18 @@
 <?php
-require_once('Base.php');
+require_once __DIR__ . '/Base.php';
 
-class User extends Base
+
+class Account extends Base
 {
-
-    public function FindByEmail($mail)
-    {
-
-        $sql = "SELECT * FROM user WHERE mail = :mail";
-        $check = $this->pdo->prepare($sql);
-        $check->execute([':mail' => $mail]);
-        return $check->fetch(PDO::FETCH_ASSOC);
-        //return $this->pdo->lastInsertId();
-    }
-
-
-    public function logout()
-    {
-        session_unset();
-        session_destroy();
-
-        header("Location: login.php");
-    }
-
-
     public function getUserById($userId)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE id = :id");
         $stmt->execute(['id' => $userId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
+
 
     public function updateUser($userId, $firstname, $lastname, $email, $phone, $civility)
     {
@@ -62,5 +45,13 @@ class User extends Base
             'password' => $hashed,
             'id'       => $userId
         ]);
+    }
+
+
+    public function findByEmail($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM user WHERE mail = :mail");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
